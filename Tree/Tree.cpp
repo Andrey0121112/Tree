@@ -6,42 +6,42 @@ Tree* Tree::Tree_create()
 {
 	Tree* node;
 	node = new Tree;
-	if (node == NULL)
-		return NULL;
+	if (node == nullptr)
+		return nullptr;
 	node->ch = '\0';
-	node->value = NULL;
-	node->sibling = NULL;
-	node->child = NULL;
+	node->value = nullptr;
+	node->sibling = nullptr;
+	node->child = nullptr;
 
 	return node;
 }
 
 Tree* Tree::Tree_insert(Tree* root, char* key, char* value)
 {
-	Tree* node = NULL;
-	Tree* parent = NULL;
-	Tree* list = NULL;
-	parent = NULL;
+	Tree* node = nullptr;
+	Tree* parent = nullptr;
+	Tree* list = nullptr;
+	//parent = NULL;
 	list = root;
 	for (; *key != '\0'; key++)
 	{
 		/* Lookup sibling node */
-		for (node = list; node != NULL; node = node->sibling)
+		for (node = list; node != nullptr; node = node->sibling)
 		{
 			if (node->ch == *key)
 				break;
 		}
-		if (node == NULL)
+		if (node == nullptr)
 		{
 			/* Node not found. Add new node */
 			node = Tree_create();
 			node->ch = *key;
 			node->sibling = list;
-			if (parent != NULL)
+			if (parent != nullptr)
 				parent->child = node;
 			else
 				root = node;
-			list = NULL;
+			list = nullptr;
 		}
 		else
 		{
@@ -52,7 +52,7 @@ Tree* Tree::Tree_insert(Tree* root, char* key, char* value)
 
 	}
 	/* Update value in leaf */
-	if (node->value != NULL)
+	if (node->value != nullptr)
 		free(node->value);
 	node->value = strdup(value);
 
@@ -66,11 +66,11 @@ void Tree::Tree_print(Tree* root, int level)
 	Tree* node;
 	int i;
 
-	for (node = root; node != NULL; node = node->sibling)
+	for (node = root; node != nullptr; node = node->sibling)
 	{
 		for (i = 0; i < level; i++)
 			std::cout << "  ";
-		if (node->value != NULL)
+		if (node->value != nullptr)
 		{
 			std::cout << node->ch << " (" << node->value << ")" << std::endl;
 		}
@@ -78,7 +78,7 @@ void Tree::Tree_print(Tree* root, int level)
 		{
 			std::cout << node->ch << " " << std::endl;
 		}
-		if (node->child != NULL)
+		if (node->child != nullptr)
 			Tree_print(node->child, level + 1);
 	}
 }
@@ -104,7 +104,7 @@ void Tree::SearchTree_T9( Tree *root, int level, std::string PartWord, std::stri
 	Tree* node;
 	int i;
 
-	for (node = root; node != NULL; node = node->sibling)
+	for (node = root; node != nullptr; node = node->sibling)
 	{
 
 		std::string GPartTemp_temp = GPartTemp;
@@ -114,7 +114,7 @@ void Tree::SearchTree_T9( Tree *root, int level, std::string PartWord, std::stri
 			GPartTemp = GPartTemp + GPartTemp_temp[i];
 		}
 
-		if (node->value != NULL)
+		if (node->value != nullptr)
 		{
 			GPartTemp = GPartTemp + node->ch;
 
@@ -125,15 +125,20 @@ void Tree::SearchTree_T9( Tree *root, int level, std::string PartWord, std::stri
 			GPartTemp = GPartTemp + node->ch;
 
 
-		if (node->child != NULL)
+		if (node->child != nullptr)
 			SearchTree_T9(node->child, level + 1, PartWord, GPartTemp, TEMP);
 
 	}
 }
 
-Tree::~Tree() 
+void Tree::TreeDelete(Tree * root)
 {
+	delete root;
+}
+
+Tree::~Tree()
+{
+	delete this->child;
 	delete this->sibling;
-	delete this->child;;
 	delete this->value;
 }

@@ -26,6 +26,8 @@ public:
 
 	void SearchTree_T9(struct Tree *root, int level, std::string PartWord, std::string GPartTemp, std::map<std::string, int> *TEMP);
 	
+	void TreeDelete(Tree * root);
+
 	~Tree();
 
 };
