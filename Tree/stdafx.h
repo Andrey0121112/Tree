@@ -6,7 +6,7 @@
 #pragma once
 
 #include "targetver.h"
-
+#define _CRT_NONSTDC_NO_DEPRECATE
 
 #include <stdio.h>
 #include <tchar.h>
